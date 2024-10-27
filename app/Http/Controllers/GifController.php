@@ -19,6 +19,7 @@ class GifController extends Controller
 
     public function index(Request $request)
     {
+        // Add DTO
         $queryParam = $request->query('query') ?? 'gandalf';
         $limitParam = $request->query('limit') ?? 10;
         $offsetParam = $request->query('offset') ?? 0;
