@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "df90d144-1b8a-42f5-954b-41341b215053",
+		"name": "challenge-prex-php",
+		"description": "Esta colección de Postman está diseñada para facilitar el trabajo con la API de Giphy como parte de un desafío técnico. Aquí encontrarás varias solicitudes preconfiguradas que te permitirán interactuar con la API y explorar sus funcionalidades de manera eficiente.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13818192"
+	},
+	"item": [
+		{
+			"name": "Consultas Api Giphy",
+			"item": [
+				{
+					"name": "Obtener gift por palabra",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GIPHY_BASE_URL}}/search?api_key={{API_KEY}}&q=gandalf",
+							"host": [
+								"{{GIPHY_BASE_URL}}"
+							],
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{API_KEY}}"
+								},
+								{
+									"key": "q",
+									"value": "gandalf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener gift por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GIPHY_BASE_URL}}/QvBoMEcQ7DQXK?api_key={{API_KEY}}",
+							"host": [
+								"{{GIPHY_BASE_URL}}"
+							],
+							"path": [
+								"QvBoMEcQ7DQXK"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "{{API_KEY}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Esta carpeta contiene las consultas a la api v1 de Giphy"
+		},
+		{
+			"name": "Consultas Mi Api",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "4|JXCfLmPO2GUsOcEvIspzZGBH5zg0XSvtF6PEfEhaef59244e",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"pepitoperez@gmail.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_BASE_URL}}:{{PORT}}/api/login",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Health",
+					"item": [
+						{
+							"name": "Obtener estado de la api",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_BASE_URL}}:{{PORT}}/api/health",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Gift",
+					"item": [
+						{
+							"name": "Obtener por palabra/frase",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{API_BASE_URL}}:{{PORT}}/api/search/gift?query=gandalf&limit=10&offset=10",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"search",
+										"gift"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "gandalf"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "offset",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_BASE_URL}}:{{PORT}}/api/gift/QvBoMEcQ7DQXK",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"gift",
+										"QvBoMEcQ7DQXK"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Guardar gif favorito",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"gif_id\": \"QvBoMEcQ7DQXK\",\n    \"alias\": \"gandalf\",\n    \"user_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_BASE_URL}}:{{PORT}}/api/gift",
+									"host": [
+										"{{API_BASE_URL}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"gift"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Esta carpeta contiene todas las consultas internas utilizadas en nuestra API REST. Estas consultas están diseñadas para manejar la lógica de negocio y la interacción con la base de datos, proporcionando los datos necesarios para las diferentes operaciones de la API."
+		}
+	]
+}
