@@ -27,6 +27,7 @@ Asegúrate de tener instalados los siguientes programas en tu máquina:
 
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/)
 
 ## Instalación
 
@@ -35,8 +36,60 @@ Sigue estos pasos para instalar y configurar el proyecto:
 1. **Clona el repositorio**:
 
    ```bash
-   git clone https://github.com/tu-usuario/tu-repo.git
-   cd tu-repo
+   - SHH: git clone git@github.com:ayrtoncravero/challenge-prex-php.git
+   - HTTPS: https://github.com/ayrtoncravero/challenge-prex-php.git
+   - cd challenge-prex-php
+2. **Cargar env**:
+   ```bash
+     - cp .env.example .env
+- Llenar keys de DB
+
+3. **Configuración del entorno Docker (todos los comandos deben ejecutarse en el src)**:
+
+   - **Construir imágenes necesarias**:
+     ```bash
+     docker-compose up -d --build
+     ```
+
+   - **Verifica que los contenedores estén corriendo**:
+     ```bash
+     docker-compose ps
+     ```
+
+   - **Instalar dependencias**:
+     ```bash
+     docker-compose exec php composer install
+     ```
+
+   - **Generar la clave de aplicación**:
+     ```bash
+     docker-compose exec php php artisan key:generate
+     ```
+
+   - **Crear DB**:
+     - **Acceder al contenedor de MySQL**:
+       - Asegúrate de que coincida con lo definido en tu archivo `.env` en `DB_PASSWORD`.
+       ```bash
+       docker-compose exec db mysql -u root -p
+       ```
+
+     - **Crear la DB**:
+       - Asegúrate de que coincida con lo definido en tu archivo `.env`.
+       ```sql
+       CREATE DATABASE nombre_de_tu_base_de_datos;
+       ```
+
+     - **Para salir del cliente de MySQL, utiliza el comando**:
+       ```bash
+       exit;
+       ```
+
+   - **Correr migraciones y ejecutar seeders**:
+     ```bash
+     docker-compose exec php php artisan migrate --seed
+     ```
+
+   - **Para validar el correcto inicio, dirígete a**: [http://localhost:8000/](http://localhost:8000/) -> Cambia el puerto por el que hayas configurado en el `docker-compose.yml`.
    
 ## Diagrama de casos de uso
 ![diagrama-de-casos-de-uso](./docs/images/diagrama-de-casos-de-uso.png)
