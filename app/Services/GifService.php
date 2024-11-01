@@ -2,34 +2,36 @@
 
 namespace App\Services;
 
-use App\Repositories\MyRepository;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Log;
 use App\dtos\GifSearchDTO;
 use App\Dtos\GetGifByIdDTO;
+use App\Dtos\SaveGifDTO;
+use App\Repositories\GifRepository;
+use App\Models\Gif;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
+use RuntimeException;
+use App\Exceptions\GifSaveException;
 
 class GifService
 {
-    protected $myRepository;
+    protected $gifRepository;
+    protected $apiUrl;
 
-    // public function __construct(MyRepository $myRepository)
-    // {
-    //     $this->myRepository = $myRepository;
-    // }
+    public function __construct(GifRepository $gifRepository)
+    {
+        $this->gifRepository = $gifRepository;
+        $this->apiUrl = config('app.custom_secrets.giphy_base_url');
+    }
 
     public function getAllData(GifSearchDTO $gifSearchDTO)
     {
-		// TODO: Guardar la base url de giphy en el env y siempre usarla para cada consulta
-
-		// TODO: Este client deberia de sacarlo a una funcion que lo devualva o usar un valor global 
 		$client = new Client();
 
-		$url = 'https://api.giphy.com/v1/gifs/search';
-        $apiKey = "nA1zZdTjYL2GZ4OPF1GYyJwDspndR1WY";
+		$url = "$this->apiUrl/search";
+        $apiKey = config('app.custom_secrets.giphy_api_key');
 
 		try {
-			// TODO: Hacer una abstracción de la libreria para hacer consultas http y pasarle los parametos
-			// token y demas para las consultas y los demas campos opcioneles como el limit
             $response = $client->request('GET', $url, [
                 'query' => [
                     'api_key' => $apiKey,
@@ -42,21 +44,17 @@ class GifService
 
 			$data = json_decode($response->getBody(), true);
 
-			// return $data;
-
-			// Hacer un guardado de la respuesta con los datos del usuario, incluyendo su IP(revisar si lo recomendado es encriptar su ip)
-
         	return $this->formatResponseSearchGiftByWord($data);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error al obtener los GIFs'], 500);
+            return response()->json(['error' => 'error to get gifs data'], 500);
         }
     }
 
 	public function getGifById(GetGifByIdDTO $getGifByIdDTO){
 		$client = new Client();
 
-		$url = "api.giphy.com/v1/gifs/{$getGifByIdDTO->id}";
-        $apiKey = "nA1zZdTjYL2GZ4OPF1GYyJwDspndR1WY";
+        $url = "$this->apiUrl/{$getGifByIdDTO->id}";
+        $apiKey = config('app.custom_secrets.giphy_api_key');
 
 		try {
             $response = $client->request('GET', $url, [
@@ -81,7 +79,7 @@ class GifService
             'count' => $data['pagination']['count'],
             'offset' => $data['pagination']['offset'],
             'gifs' => [],
-			'message' => 'GIF encontrado correctamente.',
+			'message' => 'gif found successfully',
         ];
 
         foreach ($data['data'] as $gif) {
@@ -110,8 +108,21 @@ class GifService
 					'title' => $data['data']['title'],
 					'url' => $data['data']['url'],
 				],
-				'message' => 'GIF encontrado correctamente.',
+				'message' => 'gif found successfully',
 			];
 		}
+    }
+
+    public function saveGif(SaveGifDTO $saveGifDTO): Gif
+    {
+        try {
+            return $this->gifRepository->save($saveGifDTO);
+        } catch (QueryException $e) {
+            Log::error('database error while saving gif: ' . $e->getMessage(), ['data' => $saveGifDTO->toArray()]);
+            throw new GifSaveException('there was an error saving the gif', 0, $e);
+        } catch (\Exception $e) {
+            Log::error('unexpected error while saving gif: ' . $e->getMessage(), ['data' => $saveGifDTO->toArray()]);
+            throw new RuntimeException('an unexpected error occurred while saving the gif', 0, $e);
+        }
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46fb60f7e094de0ed764e86615ad1551",
+    "content-hash": "eba9b934db5791644bb5122e44d91696",
     "packages": [
         {
             "name": "amphp/amp",
@@ -7311,16 +7311,16 @@
         },
         {
             "name": "symfony/psr-http-message-bridge",
-            "version": "v7.1.4",
+            "version": "v7.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/psr-http-message-bridge.git",
-                "reference": "405a7bcd872f1563966f64be19f1362d94ce71ab"
+                "reference": "f16471bb19f6685b9ccf0a2c03c213840ae68cd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/405a7bcd872f1563966f64be19f1362d94ce71ab",
-                "reference": "405a7bcd872f1563966f64be19f1362d94ce71ab",
+                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/f16471bb19f6685b9ccf0a2c03c213840ae68cd6",
+                "reference": "f16471bb19f6685b9ccf0a2c03c213840ae68cd6",
                 "shasum": ""
             },
             "require": {
@@ -7374,7 +7374,7 @@
                 "psr-7"
             ],
             "support": {
-                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v7.1.4"
+                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v7.1.6"
             },
             "funding": [
                 {
@@ -7390,7 +7390,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-15T22:48:53+00:00"
+            "time": "2024-09-25T14:20:29+00:00"
         },
         {
             "name": "symfony/routing",
@@ -9242,16 +9242,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.37",
+            "version": "10.5.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c7cffa0efa2b70c22366523e6d804c9419eb2400"
+                "reference": "a86773b9e887a67bc53efa9da9ad6e3f2498c132"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c7cffa0efa2b70c22366523e6d804c9419eb2400",
-                "reference": "c7cffa0efa2b70c22366523e6d804c9419eb2400",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a86773b9e887a67bc53efa9da9ad6e3f2498c132",
+                "reference": "a86773b9e887a67bc53efa9da9ad6e3f2498c132",
                 "shasum": ""
             },
             "require": {
@@ -9323,7 +9323,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.37"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.38"
             },
             "funding": [
                 {
@@ -9339,7 +9339,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-10-19T13:03:41+00:00"
+            "time": "2024-10-28T13:06:21+00:00"
         },
         {
             "name": "sebastian/cli-parser",
