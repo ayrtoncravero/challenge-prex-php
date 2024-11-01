@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'guard' => 'web',
+    'guard' => 'api',
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'personal_access_client' => [
+    'user_access_token' => [
         'id' => env('CLIENT_ID'),
         'secret' => env('CLIENT_SECRET'),
     ],
@@ -75,5 +75,11 @@ return [
     'tokens' => [
         'access' => 30, // Tiempo en minutos (por ejemplo, 60 para 1 hora)
         'refresh' => 20160, // Tiempo en minutos (por defecto 2 semanas)
+    ],
+
+    'oauth' => [
+        'urls' => [
+            'redirect' => env('PASSPORT_OAUTH_REDIRECT_URL')
+        ],
     ],
 ];

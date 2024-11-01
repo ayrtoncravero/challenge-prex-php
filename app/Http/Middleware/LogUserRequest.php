@@ -30,7 +30,7 @@ class LogUserRequest
             'request_body' => $requestBody,
             'response_code' => $statusCode,
             'response_body' => $responseBody,
-            'ip_address' => $ipAddress, 
+            'ip_address' => $ipAddress,
         ]);
 
         return $response;

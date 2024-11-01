@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('endpoint');
-            $table->text('request_body');
+            $table->longText('request_body');
             $table->integer('response_code');
-            $table->text('response_body');
+            $table->longText('response_body');
             $table->string('ip_address');
             $table->timestamps();
         });

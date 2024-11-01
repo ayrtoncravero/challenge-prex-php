@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Requests\RegisterUserRequest;
 use App\Services\AuthService;
 use App\Dtos\LoginDTO;
+use Laravel\Passport\Client;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
@@ -20,31 +22,21 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
-        // TODO: Agregar archivo dedicado de validacion como en gift
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
 
-        $loginDTO = new LoginDTO($request->email, $request->password);
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        
+        $user = Auth::user();
 
-        $response = $this->authService->login($loginDTO);
-
-        // // Intentar autenticar al usuario
-        // if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        //     // Obtener el usuario autenticado
-        //     $user = Auth::user();
-
-        //     // Generar el token
-        //     $accessToken = $user->createToken('password_grant_access_token', ['view-account', 'edit-account'])->accessToken;
-
-        //     // Responder con el token
-        //     return response()->json(['token' => $token], 200);
-        // }
-
-        // return response()->json(['message' => 'Credenciales incorrectas.'], 401);
+        $tokenResult = $user->createToken('user_access_token')->accessToken;
+        return response()->json(['token' => $tokenResult], 200);
     }
 
     public function register(RegisterUserRequest $request)

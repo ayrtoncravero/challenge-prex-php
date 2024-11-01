@@ -31,9 +31,5 @@ class AuthService
 
 		
 		$token = $newUser->createToken('user_access_token')->accessToken;
-
-		dd($token);
-
-		// $token = $user->createToken('user_access_token')->accessToken;
 	}
 }

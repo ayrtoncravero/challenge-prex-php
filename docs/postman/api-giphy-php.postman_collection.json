@@ -1,14 +1,14 @@
 {
 	"info": {
 		"_postman_id": "df90d144-1b8a-42f5-954b-41341b215053",
-		"name": "challenge-prex-php",
+		"name": "api-giphy-php",
 		"description": "Esta colección de Postman está diseñada para facilitar el trabajo con la API de Giphy como parte de un desafío técnico. Aquí encontrarás varias solicitudes preconfiguradas que te permitirán interactuar con la API y explorar sus funcionalidades de manera eficiente.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13818192"
 	},
 	"item": [
 		{
-			"name": "Consultas Api Giphy",
+			"name": "Consultas API giphy oficial",
 			"item": [
 				{
 					"name": "Obtener gift por palabra",
@@ -64,23 +64,36 @@
 			"description": "Esta carpeta contiene las consultas a la api v1 de Giphy"
 		},
 		{
-			"name": "Consultas Mi Api",
+			"name": "Consultas mi API",
 			"item": [
 				{
 					"name": "Auth",
 					"item": [
 						{
 							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json();",
+											"",
+											"if (response.token) {",
+											"    pm.environment.set(\"ACCESS_TOKEN\", response.token);",
+											"    console.log(\"Access token guardado en el entorno:\", response.token);",
+											"} else {",
+											"    console.log(\"No se encontró access_token en la respuesta\");",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "4|JXCfLmPO2GUsOcEvIspzZGBH5zg0XSvtF6PEfEhaef59244e",
-											"type": "string"
-										}
-									]
+									"type": "noauth"
 								},
 								"method": "POST",
 								"header": [],
@@ -134,11 +147,21 @@
 					]
 				},
 				{
-					"name": "Gift",
+					"name": "Gif",
 					"item": [
 						{
 							"name": "Obtener por palabra/frase",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -147,15 +170,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{API_BASE_URL}}:{{PORT}}/api/search/gift?query=gandalf&limit=10&offset=10",
+									"raw": "{{API_BASE_URL}}:{{PORT}}/api/gif?query=gandalf&limit=10&offset=10",
 									"host": [
 										"{{API_BASE_URL}}"
 									],
 									"port": "{{PORT}}",
 									"path": [
 										"api",
-										"search",
-										"gift"
+										"gif"
 									],
 									"query": [
 										{
@@ -178,17 +200,27 @@
 						{
 							"name": "Obtener por ID",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{API_BASE_URL}}:{{PORT}}/api/gift/QvBoMEcQ7DQXK",
+									"raw": "{{API_BASE_URL}}:{{PORT}}/api/gif/QvBoMEcQ7DQXK",
 									"host": [
 										"{{API_BASE_URL}}"
 									],
 									"port": "{{PORT}}",
 									"path": [
 										"api",
-										"gift",
+										"gif",
 										"QvBoMEcQ7DQXK"
 									]
 								}
@@ -198,6 +230,16 @@
 						{
 							"name": "Guardar gif favorito",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -210,14 +252,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{API_BASE_URL}}:{{PORT}}/api/gift",
+									"raw": "{{API_BASE_URL}}:{{PORT}}/api/gif",
 									"host": [
 										"{{API_BASE_URL}}"
 									],
 									"port": "{{PORT}}",
 									"path": [
 										"api",
-										"gift"
+										"gif"
 									]
 								}
 							},

@@ -164,7 +164,7 @@ return [
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
-        App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
@@ -187,6 +187,7 @@ return [
 
     'custom_secrets' => [
         'giphy_base_url' => env('GIPHY_BASE_URL', 'https://api.giphy.com/v1/gifs'),
+        'giphy_api_key' => env('GIPHY_API_KEY', ''),
     ]
 
 ];

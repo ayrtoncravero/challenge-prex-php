@@ -26,17 +26,12 @@ class GifService
 
     public function getAllData(GifSearchDTO $gifSearchDTO)
     {
-		// TODO: Guardar la base url de giphy en el env y siempre usarla para cada consulta
-
-		// TODO: Este client deberia de sacarlo a una funcion que lo devualva o usar un valor global 
 		$client = new Client();
 
 		$url = "$this->apiUrl/search";
-        $apiKey = "nA1zZdTjYL2GZ4OPF1GYyJwDspndR1WY";
+        $apiKey = config('app.custom_secrets.giphy_api_key');
 
 		try {
-			// TODO: Hacer una abstracción de la libreria para hacer consultas http y pasarle los parametos
-			// token y demas para las consultas y los demas campos opcioneles como el limit
             $response = $client->request('GET', $url, [
                 'query' => [
                     'api_key' => $apiKey,
@@ -51,7 +46,7 @@ class GifService
 
         	return $this->formatResponseSearchGiftByWord($data);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error al obtener los GIFs'], 500);
+            return response()->json(['error' => 'error to get gifs data'], 500);
         }
     }
 
@@ -59,7 +54,7 @@ class GifService
 		$client = new Client();
 
         $url = "$this->apiUrl/{$getGifByIdDTO->id}";
-        $apiKey = "nA1zZdTjYL2GZ4OPF1GYyJwDspndR1WY";
+        $apiKey = config('app.custom_secrets.giphy_api_key');
 
 		try {
             $response = $client->request('GET', $url, [
@@ -84,7 +79,7 @@ class GifService
             'count' => $data['pagination']['count'],
             'offset' => $data['pagination']['offset'],
             'gifs' => [],
-			'message' => 'GIF encontrado correctamente.',
+			'message' => 'gif found successfully',
         ];
 
         foreach ($data['data'] as $gif) {
@@ -113,7 +108,7 @@ class GifService
 					'title' => $data['data']['title'],
 					'url' => $data['data']['url'],
 				],
-				'message' => 'GIF encontrado correctamente.',
+				'message' => 'gif found successfully',
 			];
 		}
     }
@@ -123,11 +118,11 @@ class GifService
         try {
             return $this->gifRepository->save($saveGifDTO);
         } catch (QueryException $e) {
-            Log::error('database error while saving GIF: ' . $e->getMessage(), ['data' => $saveGifDTO->toArray()]);
-            throw new GifSaveException('there was an error saving the GIF', 0, $e);
+            Log::error('database error while saving gif: ' . $e->getMessage(), ['data' => $saveGifDTO->toArray()]);
+            throw new GifSaveException('there was an error saving the gif', 0, $e);
         } catch (\Exception $e) {
-            Log::error('unexpected error while saving GIF: ' . $e->getMessage(), ['data' => $saveGifDTO->toArray()]);
-            throw new RuntimeException('an unexpected error occurred while saving the GIF.', 0, $e);
+            Log::error('unexpected error while saving gif: ' . $e->getMessage(), ['data' => $saveGifDTO->toArray()]);
+            throw new RuntimeException('an unexpected error occurred while saving the gif', 0, $e);
         }
     }
 }

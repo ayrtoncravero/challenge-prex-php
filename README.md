@@ -86,10 +86,23 @@ Sigue estos pasos para instalar y configurar el proyecto:
 
    - **Correr migraciones y ejecutar seeders**:
      ```bash
-     docker-compose exec php php artisan migrate --seed
+     docker-compose exec php php artisan migrate:fresh --seed
      ```
 
-   - **Para validar el correcto inicio, dirígete a**: [http://localhost:8000/](http://localhost:8000/) -> Cambia el puerto por el que hayas configurado en el `docker-compose.yml`.
+   - **Generar secrets de Passport**:
+     - Luego de ejecutar el comando se nos vana hacer dos preguntas, a las 2 respondemos con: yes
+     ```bash
+     docker-compose exec php php artisan passport:install
+     ```
+
+     - El resultado de ese comando nos dejara pares de key: 'Client ID' y 'Client secret', copiaremos cada uno y los llevaremos al .env en los valores: 'CLIENT_ID' y 'CLIENT_SECRET' respectivamente.
+     - El mismo comando generara 2 key en la carpeta '/storage/' oauth-public.key y oauth-private.key, a las mismas debemos de darle una serie de permisos con los siguientes comandos:
+        ```bash
+        - chmod 600 storage/oauth-private.key
+        - chmod 644 storage/oauth-public.key
+        ```
+
+   - **Para validar el correcto inicio, dirígete a**: [http://localhost:8000/](http://localhost:8000/api/health) -> Cambia el puerto por el que hayas configurado en el `docker-compose.yml`.
    
 ## Diagrama de casos de uso
 ![diagrama-de-casos-de-uso](./docs/images/diagrama-de-casos-de-uso.png)
